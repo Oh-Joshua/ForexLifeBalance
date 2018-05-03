@@ -252,10 +252,14 @@ bool LimitOrder(
   Print("  Now:iNanpinTimes :", iNanpinTimes);
 
 // todo:マックスナンピンに損切を入れる
-// todo:ナンピン回数が０の時、ロット数を１倍にする
+  // ナンピン回数が０の時、ロット数を１倍にする
+  if (iNanpinTimes == 0){
+      dNanpinLots = dBaseLots * MathPow(iNanpinBase, iNanpinTimes);
+                                          // ロット数をナンピンする
+      iNanpinTimes++;
+  }
   // オーダー種別が継続している時はナンピンをカウントアップする
-  if (argOrderType == iNanpinOrderType){
-    // ナンピンをカウントアップする
+  else if (argOrderType == iNanpinOrderType){
     if (iNanpinTimes < MAX_NANPIN) {      // ナンピン範囲内の場合
       dNanpinLots = dBaseLots * MathPow(iNanpinBase, iNanpinTimes);
                                           // ロット数をナンピンする
